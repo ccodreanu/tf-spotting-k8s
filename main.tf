@@ -45,12 +45,12 @@ resource "aws_security_group" "k8s_sg" {
   }
 }
 
-resource "aws_spot_instance_request" "k8s-main" {
+resource "aws_spot_instance_request" "k8s_main" {
   ami = "${lookup(var.aws_amis, var.aws_region)}"
   instance_type = "t3.small"
 
   key_name = "${aws_key_pair.ssh.id}"
 
-  vpc_security_group_ids = ["${aws_vpc.k8s_vpc.id}"]
+  vpc_security_group_ids = ["${aws_security_group.k8s_sg.id}"]
   subnet_id = "${aws_subnet.k8s_sub_1.id}"
 }
